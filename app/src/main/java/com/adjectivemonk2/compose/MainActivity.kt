@@ -1,6 +1,7 @@
 package com.adjectivemonk2.compose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +11,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.adjectivemonk2.compose.network.DogPicsApi
 import com.adjectivemonk2.compose.ui.theme.ComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+  @Inject internal lateinit var dogPicApi: DogPicsApi
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    Log.d("MainActivity", "Dog Api: ${dogPicApi.hashCode()}")
     setContent {
       ComposeTheme {
         // A surface container using the 'background' color from the theme
