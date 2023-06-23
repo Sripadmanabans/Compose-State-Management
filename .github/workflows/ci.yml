@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: ${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  assemble:
+    name: Assemble
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # These setup steps should be common across all jobs in this workflow.
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 18
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Assemble with gradle — make sure everything builds
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            assemble --stacktrace -Dorg.gradle.unsafe.configuration-cache=false
+          cache-read-only: false
+
+  # Runs all check tasks in parallel.
+  check:
+    name: Check
+    needs: assemble
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      # Run all checks, even if some fail.
+      fail-fast: false
+      matrix:
+        gradle-task:
+          # Unit tests
+          - test
+          - lint
+          - spotlessCheck
+          - detektMain
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 18
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Check with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            ${{ matrix.gradle-task }} --no-daemon --stacktrace -Dorg.gradle.unsafe.configuration-cache=false
+          cache-read-only: false
+
+      # Report as Github Pull Request Check.
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: matrix.gradle-task == 'test'
+        with:
+          report_paths: '**/build/test-results/test*/TEST-*.xml'
