@@ -3,6 +3,9 @@ plugins {
   alias(libs.plugins.kotlinAndroid)
   alias(libs.plugins.spotless)
   alias(libs.plugins.detekt)
+  alias(libs.plugins.ksp)
+  alias(libs.plugins.kapt)
+  alias(libs.plugins.hilt)
 }
 
 android {
@@ -29,11 +32,8 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
-  kotlinOptions {
-    jvmTarget = "11"
+    sourceCompatibility = JavaVersion.VERSION_18
+    targetCompatibility = JavaVersion.VERSION_18
   }
   buildFeatures {
     compose = true
@@ -58,11 +58,21 @@ dependencies {
   implementation(libs.ui.graphics)
   implementation(libs.ui.tooling.preview)
   implementation(libs.material3)
+  implementation(libs.moshi)
+  ksp(libs.moshi.codegen)
+  implementation(libs.hilt)
+  kapt(libs.hilt.compiler)
+
+  implementation(libs.okhttp)
+  implementation(libs.retrofit)
+  implementation(libs.retrofit.moshi)
+
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.espresso.core)
   androidTestImplementation(platform(libs.compose.bom))
   androidTestImplementation(libs.ui.test.junit4)
+
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
   debugImplementation(libs.leakCanary)
@@ -81,4 +91,12 @@ detekt {
   buildUponDefaultConfig = true
   config.setFrom("${rootDir}/detekt.yml")
   parallel = true
+}
+
+kapt {
+  correctErrorTypes = true
+}
+
+kotlin {
+  jvmToolchain(18)
 }
