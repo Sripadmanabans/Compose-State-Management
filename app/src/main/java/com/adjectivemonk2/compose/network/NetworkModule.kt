@@ -1,6 +1,7 @@
 package com.adjectivemonk2.compose.network
 
 import com.squareup.moshi.Moshi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,39 +15,45 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+interface NetworkModule {
 
-  @Provides
+  @Binds
   @Singleton
-  fun okhttp(): OkHttpClient {
-    return OkHttpClient.Builder().build()
-  }
+  fun dogRepository(repository: DogRepositoryImpl): DogRepository
 
-  @Provides
-  @Singleton
-  fun moshi(): Moshi {
-    return Moshi.Builder().build()
-  }
+  companion object {
+    @Provides
+    @Singleton
+    fun okhttp(): OkHttpClient {
+      return OkHttpClient.Builder().build()
+    }
 
-  @Provides
-  @Singleton
-  fun moshiConverterFactory(moshi: Moshi): Converter.Factory {
-    return MoshiConverterFactory.create(moshi)
-  }
+    @Provides
+    @Singleton
+    fun moshi(): Moshi {
+      return Moshi.Builder().build()
+    }
 
-  @Provides
-  @Singleton
-  fun retrofit(okHttpClient: OkHttpClient, converterFactory: Converter.Factory): Retrofit {
-    return Retrofit.Builder()
-      .baseUrl("https://dog.ceo/api/")
-      .client(okHttpClient)
-      .addConverterFactory(converterFactory)
-      .build()
-  }
+    @Provides
+    @Singleton
+    fun moshiConverterFactory(moshi: Moshi): Converter.Factory {
+      return MoshiConverterFactory.create(moshi)
+    }
 
-  @Provides
-  @Singleton
-  fun dogPicsApi(retrofit: Retrofit): DogPicsApi {
-    return retrofit.create()
+    @Provides
+    @Singleton
+    fun retrofit(okHttpClient: OkHttpClient, converterFactory: Converter.Factory): Retrofit {
+      return Retrofit.Builder()
+        .baseUrl("https://dog.ceo/api/")
+        .client(okHttpClient)
+        .addConverterFactory(converterFactory)
+        .build()
+    }
+
+    @Provides
+    @Singleton
+    fun dogPicsApi(retrofit: Retrofit): DogPicsApi {
+      return retrofit.create()
+    }
   }
 }

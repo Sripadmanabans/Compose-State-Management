@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.adjectivemonk2.compose.network.DogPicsApi
+import com.adjectivemonk2.compose.network.DogRepository
 import com.adjectivemonk2.compose.ui.theme.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,11 +19,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-  @Inject internal lateinit var dogPicApi: DogPicsApi
+  @Inject internal lateinit var dogsRepository: DogRepository
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Log.d("MainActivity", "Dog Api: ${dogPicApi.hashCode()}")
+    Log.d("MainActivity", "Dog repo: ${dogsRepository.hashCode()}")
     setContent {
       ComposeTheme {
         // A surface container using the 'background' color from the theme
