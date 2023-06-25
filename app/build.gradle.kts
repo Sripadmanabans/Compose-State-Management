@@ -6,6 +6,7 @@ plugins {
   alias(libs.plugins.ksp)
   alias(libs.plugins.kapt)
   alias(libs.plugins.hilt)
+  alias(libs.plugins.molecule)
 }
 
 android {
