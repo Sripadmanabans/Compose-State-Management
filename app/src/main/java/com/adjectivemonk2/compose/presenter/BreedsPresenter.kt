@@ -20,7 +20,7 @@ class BreedsPresenter @Inject constructor(private val repository: DogRepository)
   }
 
   @Composable
-  fun present(): Breeds {
+  fun present(): BreedsUi {
     val breeds = remember { mutableStateListOf<Breed>() }
     var selectedBreed by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) {
@@ -31,10 +31,10 @@ class BreedsPresenter @Inject constructor(private val repository: DogRepository)
       }
     }
     LaunchedEffect(Unit) {
-      events.collect {
-        when (it) {
+      events.collect { event ->
+        when (event) {
           is BreedsEvent.OnSelect -> {
-            val currentSelectedBreed = it.breed
+            val currentSelectedBreed = event.breed
             var previousSelection = -1
             var currentSelection = -1
             for (i in breeds.indices) {
@@ -55,19 +55,27 @@ class BreedsPresenter @Inject constructor(private val repository: DogRepository)
             }
             selectedBreed = currentSelectedBreed.name
           }
+
+          BreedsEvent.ClearSelection -> {
+            selectedBreed = null
+            val index = breeds.indexOfFirst { it.isSelected }
+            breeds[index] = breeds[index].copy(isSelected = false)
+          }
         }
       }
     }
-    return Breeds(breeds.toList(), selectedBreed)
+    return BreedsUi(breeds.toList(), selectedBreed)
   }
 }
 
 sealed interface BreedsEvent {
   class OnSelect(val breed: Breed) : BreedsEvent
+
+  object ClearSelection : BreedsEvent
 }
 
 @Immutable
-data class Breeds(
+data class BreedsUi(
   val breeds: List<Breed>,
   val selectedBreed: String?,
 )
