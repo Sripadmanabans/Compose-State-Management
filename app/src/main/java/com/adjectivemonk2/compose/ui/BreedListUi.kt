@@ -23,8 +23,8 @@ import com.adjectivemonk2.compose.presenter.BreedsUi
 import com.adjectivemonk2.compose.ui.theme.ComposeTheme
 
 @Composable
-fun BreedsList(breedsUi: BreedsUi, onBreedClick: (breed: Breed) -> Unit) {
-  LazyColumn(modifier = Modifier.fillMaxSize()) {
+fun BreedsList(breedsUi: BreedsUi, modifier: Modifier, onBreedClick: (breed: Breed) -> Unit) {
+  LazyColumn(modifier = modifier) {
     items(items = breedsUi.breeds, key = { breed -> breed.name }) { breed ->
       BreedItem(breed = breed) { onBreedClick(breed) }
     }
@@ -80,6 +80,6 @@ private fun BreedsListPreview() {
     )
   }
   Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-    BreedsList(breedsUi = breedsUi) {}
+    BreedsList(breedsUi = breedsUi, modifier = Modifier.fillMaxSize()) {}
   }
 }

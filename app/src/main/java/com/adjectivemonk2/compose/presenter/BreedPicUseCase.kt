@@ -12,7 +12,7 @@ import com.adjectivemonk2.compose.network.DogRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
-class BreedPicPresenter @Inject constructor(private val repository: DogRepository) {
+class BreedPicUseCase @Inject constructor(private val repository: DogRepository) {
 
   private val events = MutableSharedFlow<BreedPicEvent>(extraBufferCapacity = 5)
 
@@ -21,7 +21,7 @@ class BreedPicPresenter @Inject constructor(private val repository: DogRepositor
   }
 
   @Composable
-  fun present(selectedBreed: String): BreedPicUi {
+  fun models(selectedBreed: String): BreedPicUi {
     var loading by remember(selectedBreed) { mutableStateOf(true) }
     var imageUrl by remember(selectedBreed) { mutableStateOf<String?>(null) }
     var fetchInvalidator by remember(selectedBreed) { mutableIntStateOf(0) }
