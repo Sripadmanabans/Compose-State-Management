@@ -14,6 +14,8 @@ moshi = "1.15.0"
 dagger = "2.46.1"
 okhttp = "5.0.0-alpha.11"
 retrofit = "2.9.0"
+material3 = "1.2.0-alpha03"
+coil = "2.4.0"
 
 detekt = "1.23.0"
 ktlint = "0.49.1"
@@ -43,6 +45,8 @@ leakCanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", v
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class-android", version.ref = "material3" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -60,9 +60,11 @@ dependencies {
   implementation(libs.ui.tooling.preview)
   implementation(libs.material3)
   implementation(libs.moshi)
+  implementation(libs.material3.window.size)
   ksp(libs.moshi.codegen)
   implementation(libs.hilt)
   kapt(libs.hilt.compiler)
+  implementation(libs.coil.compose)
 
   implementation(libs.okhttp)
   implementation(libs.retrofit)
