@@ -1,6 +1,6 @@
 package com.adjectivemonk2.compose.ui
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,21 +18,22 @@ import coil.compose.AsyncImage
 import com.adjectivemonk2.compose.presenter.BreedPicUi
 
 @Composable
-fun BreedPicUi(breedPicUi: BreedPicUi, onRandomClick: () -> Unit) {
+fun BreedPicUi(breedPicUi: BreedPicUi, modifier: Modifier, onRandomClick: () -> Unit) {
   if (breedPicUi.loading) {
-    BreedsPicLoading()
+    BreedsPicLoading(modifier)
   } else {
-    BreedPicContent(breedPicUi, onRandomClick)
+    BreedPicContent(breedPicUi, modifier, onRandomClick)
   }
 }
 
 @Composable
 private fun BreedPicContent(
   breedPicUi: BreedPicUi,
+  modifier: Modifier,
   onRandomClick: () -> Unit,
 ) {
   Column(
-    modifier = Modifier.fillMaxSize(),
+    modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Spacer(
@@ -55,10 +56,9 @@ private fun BreedPicContent(
         .height(24.dp),
     )
 
-    Column(
+    Box(
       modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center,
+      contentAlignment = Alignment.Center,
     ) {
       AsyncImage(
         model = breedPicUi.imageUrl,
@@ -70,11 +70,10 @@ private fun BreedPicContent(
 }
 
 @Composable
-private fun BreedsPicLoading() {
-  Column(
-    modifier = Modifier.fillMaxSize(),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
+private fun BreedsPicLoading(modifier: Modifier) {
+  Box(
+    modifier = modifier.fillMaxSize(),
+    contentAlignment = Alignment.Center,
   ) {
     CircularProgressIndicator(modifier = Modifier.size(48.dp))
   }

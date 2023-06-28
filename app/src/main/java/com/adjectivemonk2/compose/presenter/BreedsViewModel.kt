@@ -14,31 +14,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BreedsViewModel @Inject constructor(
-  private val breedsPresenter: BreedsPresenter,
-  private val breedPicPresenter: BreedPicPresenter,
+  private val breedsUseCase: BreedsUseCase,
+  private val breedPicUseCase: BreedPicUseCase,
 ) : ViewModel() {
 
   private val scope = CoroutineScope(viewModelScope.coroutineContext + AndroidUiDispatcher.Main)
 
-  val uiModel = scope.launchMolecule(RecompositionClock.ContextClock) { present() }
+  val uiModel = scope.launchMolecule(RecompositionClock.ContextClock) { models() }
 
   fun onBreedSelection(breed: Breed) {
-    breedsPresenter.take(BreedsEvent.OnSelect(breed))
+    breedsUseCase.take(BreedsEvent.OnSelect(breed))
   }
 
   fun onBack() {
-    breedsPresenter.take(BreedsEvent.ClearSelection)
+    breedsUseCase.take(BreedsEvent.ClearSelection)
   }
 
   fun onRandomClick() {
-    breedPicPresenter.take(BreedPicEvent.Randomize)
+    breedPicUseCase.take(BreedPicEvent.Randomize)
   }
 
   @Composable
-  private fun present(): BreedsWithPicsUi {
-    val breedsUi = breedsPresenter.present()
+  private fun models(): BreedsWithPicsUi {
+    val breedsUi = breedsUseCase.models()
     val breedPicUi = breedsUi.selectedBreed?.let {
-      breedPicPresenter.present(it)
+      breedPicUseCase.models(it)
     }
     Log.d("Presenting", "${breedsUi.breeds.size}, ${breedsUi.selectedBreed}, $breedPicUi")
     return BreedsWithPicsUi(breedsUi, breedPicUi)
