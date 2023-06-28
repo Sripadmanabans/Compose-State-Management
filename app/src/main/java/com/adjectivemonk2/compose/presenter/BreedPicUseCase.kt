@@ -22,9 +22,9 @@ class BreedPicUseCase @Inject constructor(private val repository: DogRepository)
 
   @Composable
   fun models(selectedBreed: String): BreedPicUi {
-    var loading by remember(selectedBreed) { mutableStateOf(true) }
-    var imageUrl by remember(selectedBreed) { mutableStateOf<String?>(null) }
     var fetchInvalidator by remember(selectedBreed) { mutableIntStateOf(0) }
+    var loading by remember(selectedBreed, fetchInvalidator) { mutableStateOf(true) }
+    var imageUrl by remember(selectedBreed) { mutableStateOf<String?>(null) }
     LaunchedEffect(selectedBreed, fetchInvalidator) {
       imageUrl = repository.randomImageFor(selectedBreed)
       loading = false
