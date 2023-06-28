@@ -47,6 +47,12 @@ android {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
   }
+  @Suppress("UnstableApiUsage")
+  testOptions {
+    unitTests {
+      isReturnDefaultValues = true
+    }
+  }
 }
 
 dependencies {
@@ -71,6 +77,9 @@ dependencies {
   implementation(libs.retrofit.moshi)
 
   testImplementation(libs.junit)
+  testImplementation(libs.turbine)
+  testImplementation(libs.truth)
+  testImplementation(libs.coroutine.test)
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.espresso.core)
   androidTestImplementation(platform(libs.compose.bom))
@@ -78,7 +87,6 @@ dependencies {
 
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
-  debugImplementation(libs.leakCanary)
 }
 
 spotless {

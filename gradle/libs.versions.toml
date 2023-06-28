@@ -1,6 +1,6 @@
 [versions]
-agp = "8.2.0-alpha09"
-kotlin = "1.8.20"
+agp = "8.2.0-alpha10"
+kotlin = "1.8.21"
 core-ktx = "1.10.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
@@ -9,17 +9,20 @@ lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.2"
 compose-compiler = "1.4.7"
 compose-bom = "2023.06.01"
-ksp = "1.8.20-1.0.11"
+ksp = "1.8.21-1.0.11"
 moshi = "1.15.0"
 dagger = "2.46.1"
 okhttp = "5.0.0-alpha.11"
 retrofit = "2.9.0"
 material3 = "1.2.0-alpha03"
 coil = "2.4.0"
+turbine = "1.0.0"
+truth = "1.1.5"
+coroutine = "1.7.1"
+molecule = "0.10.0"
 
 detekt = "1.23.0"
 ktlint = "0.49.1"
-leakCanary = "2.11"
 spotless = "6.19.0"
 
 [libraries]
@@ -41,12 +44,14 @@ moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger" }
-leakCanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakCanary" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class-android", version.ref = "material3" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -56,7 +61,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
-molecule = { id = "app.cash.molecule", version = "0.9.0" }
+molecule = { id = "app.cash.molecule", version.ref = "molecule" }
 
 [bundles]
 
